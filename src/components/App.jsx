@@ -15,7 +15,6 @@ export const App = () => {
     if (localSavedContacts !== null) {
       setContacts(JSON.parse(localSavedContacts));
     }
-    console.log(localSavedContacts);
   }, []);
 
   useEffect(() => {
@@ -28,6 +27,14 @@ export const App = () => {
 
   const handleAddContact = userData => {
     const newUser = { ...userData, id: nanoid() };
+
+    const contactExisting = contacts.some(
+      contact => contact.name.toLowerCase() === userData.name.toLowerCase()
+    );
+    if (contactExisting) {
+      alert(`${userData.name}is already in contacts`);
+      return;
+    }
 
     setContacts(prevContacts => [...prevContacts, newUser]);
   };
